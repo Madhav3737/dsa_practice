@@ -8,6 +8,7 @@ class Linkedlist:
 
     def __init__(self):
         self.head = None
+        self.tail = None
 
     def __repr__(self):
         pass
@@ -19,10 +20,22 @@ class Linkedlist:
         pass
 
     def append(self, value):
-        pass
+        if self.head == None :
+            self.head = Node(value)
+            self.tail = self.head
+        else:
+            temp = self.head
+            while temp.next != None:
+                temp = temp.next
+            temp.next = Node(value)
+            self.tail = temp.next
 
     def prepend(self, value):
-        pass
+        if self.head == None:
+            self.head = Node
+            self.tail = self.head
+        else:
+            temp = Node(value)
 
     def insert(self, value, index):
         pass
@@ -41,4 +54,4 @@ class Linkedlist:
 
 
 if __name__ == "__main__":
-    
+    pass
