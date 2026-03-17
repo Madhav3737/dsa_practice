@@ -34,21 +34,53 @@
 
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        if(nums1.length >nums2.length){
+            return findMedianSortedArrays(nums2,nums1);
+        }
         int m = nums1.length;
         int n = nums2.length;
-        int z = m+n;
-        int p1, p2,k=0,l=0;
-        for(int i=0;i<(z/2)+1;i++){
-            p2 = p1;
-            if(k<m&&l<n){//both are not empty or over
-                if(nums1[k]>)
+
+        int low = 0;
+        int high = m;
+        while(low<=high){
+            int partX = (low+high)/2;
+            int partY = ((m+n+1)/2) - partX;
+
+            int maxLeftX = (partX == 0)?Integer.MIN_VALUE:nums1[partX-1];
+            int minRightX = (partX == m)?Integer.MAX_VALUE:nums1[partX];
+
+            int maxLeftY = (partY == 0)?Integer.MIN_VALUE:nums2[partY-1];
+            int minRightY = (partY == n)?Integer.MAX_VALUE:nums2[partY];
+
+            if(maxLeftX<=minRightY && maxLeftY<=minRightX){
+                if((m+n)%2==0){
+                    return ((Math.max(maxLeftX,maxLeftY)+Math.min(minRightX,minRightY))/2.0);
+                }
+                else{
+                    return ((Math.max(maxLeftX,maxLeftY))/1.0);
+                }
+            }
+            else{
+                if(maxLeftX>minRightY){
+                    high = partX - 1;
+                }
+                else{
+                    low = partX + 1;
+                }
             }
         }
+        return 0.0;
+    }
+}
 
-        //odd case
-        if (z%2==1){
-            
-        }
-
+class median{
+    public static void main(String[] args) {
+        System.out.println("Program Started");
+        int[] nums1 = new int[]{1,2,5,7};
+        int[] nums2 = new int[]{3,6,9,11};
+        Solution sol = new Solution();
+        System.out.println("Instance created");
+        double median = sol.findMedianSortedArrays(nums1,nums2);
+        System.out.println("Median = "+median);
     }
 }
